@@ -4,7 +4,8 @@
 *.dll
 *.so
 *.dylib
-
+# 하위폴더 exe ignore
+/ex/*.exe
 # Test binary, built with `go test -c`
 *.test
 
