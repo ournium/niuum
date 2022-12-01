@@ -1,0 +1,54 @@
+"RUNTIME 경로 설정
+"set rtp+=~/.config/nvim/bundle/Vundle.vim
+"call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+"Plugin 'VundleVim/Vundle.vim'
+"Plugin 'faith/vim-go'
+"-------------------------------------------------------------------------------------------
+call plug#begin('~/.config/nvim/plugged')
+Plug 'fatih/vim-go'
+Plug 'scrooloose/nerdtree'
+Plug 'ryanoasis/vim-devicons' "NERDTree icon plug
+call plug#end()
+"-------------------------------------------------------------------------------------------
+" nvim check config path -> :echo stdpath('config')
+"Ctrl + n에 NERDTree Command
+map <c-n> :NERDTreeToggle<CR>
+" vim 수행시 파일 미지정 또는 디렉터리 지정 시 NERDTree 수행되도록 설정
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
+
+"1) line number
+set number
+
+"2) Highlight
+if has("syntax")
+	syntax on
+endif
+
+set hlsearch
+"3) indent
+set autoindent
+set cindent
+"4) Tap space tab너비 설정
+set ts=4
+set sts=4
+set shiftwidth=4
+"5) Status line
+set laststatus=2
+"6) Show match 괄호 하이라이트
+set showmatch
+"7) Smart setting
+set smartcase
+set smarttab
+set smartindent
+"8) Ruler
+set ruler
+"9) Encoding
+set fileencodings=utf8,euc-kr
+"10) Go Lang import
+let g:go_fmt_command = "goimports"
