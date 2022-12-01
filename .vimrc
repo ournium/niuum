@@ -16,6 +16,7 @@ set number
 set title
 set showmatch
 set ruler
+set cursorline
 " 구문강조
 if has("syntax")
 	syntax on
@@ -24,6 +25,16 @@ endif
 set t_Co=256
 set t_ut=
 colorscheme codedark
+"Source Explorer 환경설정
+nmap <F8> :SrcExplToggle<CR>                "F8 Key = SrcExpl Toggling
+nmap <C-H> <C-W>h                           "왼쪽 창으로 이동
+nmap <C-J> <C-W>j                           "아래 창으로 이동
+nmap <C-K> <C-W>k                           "윗 창으로 이동
+nmap <C-L> <C-W>l                           "오른쪽 창으로 이동
+" 명령어 보여줌
+set showcmd
+" updatetime set
+set updatetime=100
 "들여쓰기 설정
 set autoindent
 set smartindent
@@ -54,3 +65,27 @@ au BufReadPost *
 \ endif
 " 스크롤바 너비
 set sw=1
+" vim-go 기본 템플릿 비활성화
+let g:go_template_autocreate = 0
+" Airline 설정
+let g:airline#extensions#tabline#enabled = 1
+" GoRun 단축키 설정
+nmap <F5> : GoRun<CR>
+" Status line tupes/signatures
+let g:go_auto_type_info = 1
+"GoRun popup window
+function! ReuseVimGoTerm(cmd) abort
+    for w in nvim_list_wins()
+        if "goterm" == nvim_buf_get_option(nvim_win_get_buf(w), 'filetype')
+            call nvim_win_close(w, v:true)
+            break
+        endif
+    endfor
+    execute a:cmd
+endfunction
+
+let g:go_term_enabled = 1
+let g:go_term_mode = "silent keepalt rightbelow 15 split"
+let g:go_def_reuse_buffer = 1
+"close th GoRun window
+autocmd FileType go nmap <leader>r :call ReuseVimGoTerm('')<Return>
