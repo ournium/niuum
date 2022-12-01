@@ -70,7 +70,7 @@ let g:go_template_autocreate = 0
 " Airline 설정
 let g:airline#extensions#tabline#enabled = 1
 " GoRun 단축키 설정
-nmap <F5> : GoRun<CR>
+nmap <leader>g : GoRun<CR>
 " Status line tupes/signatures
 let g:go_auto_type_info = 1
 "GoRun popup window
