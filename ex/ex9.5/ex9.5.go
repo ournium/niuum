@@ -15,11 +15,12 @@ func main() {
 
 	if price > 50000 {
 		if HasRichFriend() {
+			fmt.Println("앗 신발끈이 풀렸네")
 		} else {
 			fmt.Println("나눠내자")
 		}
 	} else if price >= 30000 && price <= 50000 {
-		if GetFriendsCount() {
+		if GetFriendsCount() > 3 {
 			fmt.Println("아이쿠 신발끈이..")
 		} else {
 			fmt.Println("사람도 얼마 없는데 나눠 내자")
