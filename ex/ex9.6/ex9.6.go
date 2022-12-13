@@ -18,5 +18,5 @@ func main() {
 		fmt.Println("Error")
 	}
 
-	fmt.Println("Your age Is", age)
+	/*fmt.Println("Your age Is", age)*/
 }
