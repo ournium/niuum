@@ -1,0 +1,112 @@
+"vim-plug start
+call plug#begin('~/.config/nvim/plugged')
+"tree
+Plug 'preservim/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+"dev icon
+Plug 'ryanoasis/vim-devicons'
+"airline
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+"indentline
+"smooth scrolling
+Plug 'psliwka/vim-smoothie'
+"colorscheme
+Plug 'ayu-theme/ayu-vim'
+Plug 'tomasiser/vim-code-dark'
+"go lang
+Plug 'fatih/vim-go'
+call plug#end()
+"vim-plug end
+
+"vim-go doc popup
+let g:go_doc_popup_window = 1
+let g:go_doc_keywordprg_enable = 0
+" Setting
+set number
+set title
+set showmatch
+set ruler
+set cursorline
+" 구문강조
+if has("syntax")
+	syntax on
+endif
+"색 설정
+"set t_Co=256
+"set t_ut=
+" colorscheme codedark
+set termguicolors
+let ayucolor="light"
+let ayucolor="mirage"
+let ayucolor="dark"
+colorscheme atom-dark
+"Indent line config
+"Source Explorer 환경설정
+nmap <F8> :SrcExplToggle<CR>                "F8 Key = SrcExpl Toggling
+nmap <C-H> <C-W>h                           "왼쪽 창으로 이동
+nmap <C-J> <C-W>j                           "아래 창으로 이동
+nmap <C-K> <C-W>k                           "윗 창으로 이동
+nmap <C-L> <C-W>l                           "오른쪽 창으로 이동
+" 명령어 보여줌
+set showcmd
+" updatetime set
+set updatetime=100
+"들여쓰기 설정
+set autoindent
+set smartindent
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+set smarttab
+set expandtab
+"붙여 넣기 설정
+set paste
+set mouse-=a
+"한글 입력 설정
+set encoding=utf-8
+set termencoding=utf-8
+"상태바 표시
+set laststatus=2
+set statusline=\ %<%l:%v\ [%P]%=%a\ %h%m%r\ %F\
+"Ctrl+ n 에 NERDTree 토글
+map <c-n> :NERDTreeToggle<CR>
+"vim 수행 시 파일 미지정 또는 디렉터리 지정 시 NERDTree 수행되도록 설정
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
+" 마지막으로 수정된 곳에 커서를 위치함
+au BufReadPost *
+\ if line("'\"") > 0 && line("'\"") <= line("$") |
+\ exe "norm g`\"" |
+\ endif
+" 스크롤바 너비
+set sw=1
+" vim-go 기본 템플릿 비활성화
+let g:go_template_autocreate = 0
+" Airline 설정
+let g:airline#extensions#tabline#enabled = 1
+" GoRun 단축키 설정
+nmap <leader>g : GoRun<CR>
+" Status line tupes/signatures
+let g:go_auto_type_info = 1
+"GoRun popup window
+function! ReuseVimGoTerm(cmd) abort
+    for w in nvim_list_wins()
+        if "goterm" == nvim_buf_get_option(nvim_win_get_buf(w), 'filetype')
+            call nvim_win_close(w, v:true)
+            break
+        endif
+    endfor
+    execute a:cmd
+endfunction
+
+let g:go_term_enabled = 1
+let g:go_term_mode = "silent keepalt rightbelow 15 split"
+let g:go_def_reuse_buffer = 1
+"close th GoRun window
+autocmd FileType go nmap <leader>r :call ReuseVimGoTerm('')<Return>
+" add yaml stuffs
+" au! BufNewFile,BufReadPost *.{yaml,yml} set filetype=yaml foldmethod=indent
+au! BufNewFile,BufReadPost *.{yaml,yml} set filetype=yaml
+autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab autoindent
